@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Voice Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>🎙️ RAG Assistant</h2>
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+            </div>
+
+            <div class="stats-panel" id="statsPanel">
+                <div class="stat-card">
+                    <span class="stat-value" id="statDocs">0</span>
+                    <span class="stat-label">Documents</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="statChunks">0</span>
+                    <span class="stat-label">Chunks</span>
+                </div>
+            </div>
+
+            <div class="upload-section">
+                <h3>Upload Document</h3>
+                <form id="uploadForm">
+                    <input type="file" id="fileInput" name="file" accept=".pdf,.docx,.txt" required>
+                    <button type="submit" class="btn btn-primary" id="uploadBtn">
+                        <span id="uploadBtnText">Upload & Index</span>
+                    </button>
+                </form>
+                <div id="uploadStatus" class="status-message"></div>
+            </div>
+
+            <div class="documents-section">
+                <h3>Knowledge Base</h3>
+                <div id="documentsList" class="documents-list">
+                    <p class="empty-state">Loading documents...</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Area -->
+        <main class="main-area">
+            <header class="main-header">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">☰</button>
+                <h1>Voice Assistant</h1>
+            </header>
+
+            <div class="voice-panel">
+                <div class="voice-visual" id="voiceVisual">
+                    <div class="pulse-ring" id="pulseRing"></div>
+                    <button class="mic-btn" id="micBtn" aria-label="Start voice conversation">
+                        <span id="micIcon">🎤</span>
+                    </button>
+                </div>
+
+                <p class="voice-status" id="voiceStatus">Tap the mic to start talking</p>
+                <p class="call-timer" id="callTimer"></p>
+            </div>
+
+            <div class="content-grid">
+                <div class="transcript-panel">
+                    <div class="transcript-header">
+                        <h3>Conversation</h3>
+                        <button class="btn btn-clear" id="clearBtn">Clear</button>
+                    </div>
+                    <div class="transcript-log" id="transcriptLog">
+                        <p class="empty-state">Your conversation will appear here</p>
+                    </div>
+                </div>
+
+                <div class="session-info-panel">
+                    <h3>Session Info</h3>
+                    <div class="info-row">
+                        <span class="info-label">Status</span>
+                        <span class="info-value" id="infoStatus">Idle</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Model</span>
+                        <span class="info-value" id="infoModel">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Voice</span>
+                        <span class="info-value" id="infoVoice">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Transcriber</span>
+                        <span class="info-value" id="infoTranscriber">—</span>
+                    </div>
+
+                    <div class="info-panel-footer">
+                        <h4>How it works</h4>
+                        <ol>
+                            <li>Upload documents to build your knowledge base</li>
+                            <li>Tap the mic and allow microphone access</li>
+                            <li>Ask questions naturally — answers are grounded in your documents</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        window.VAPI_PUBLIC_KEY = "{{ api_key }}";
+        window.VAPI_ASSISTANT_ID = "{{ assistant_id }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>
